@@ -1,120 +1,122 @@
-# SupportAgent-Chatbot
+# CDP Support Chatbot
 
-# CDP Knowledge Assistant
+A documentation-powered chatbot that answers "how-to" questions about Customer Data Platforms (CDPs):  
+**Segment | mParticle | Lytics | Zeotap**. Uses semantic search and NLP to extract guidance from official documentation.
 
-A chatbot application that answers "how-to" questions related to four major Customer Data Platforms (CDPs): Segment, mParticle, Lytics, and Zeotap.
+![Chatbot Architecture](https://i.imgur.com/4F2D3Nj.png)
 
 ## Features
 
-- **Answer "How-to" Questions**: Provides step-by-step instructions for performing tasks in each CDP
-- **Platform-Specific Knowledge**: Contains documentation from Segment, mParticle, Lytics, and Zeotap
-- **Cross-CDP Comparisons**: Can compare features and approaches between different CDPs
-- **Advanced Question Handling**: Supports complex queries about advanced configurations and integrations
-- **Responsive UI**: Works on desktop and mobile devices
+- 🔍 **Documentation Scraper** - Auto-crawls CDP documentation websites
+- 🤖 **Semantic Search** - FAISS vector search + cross-encoder reranking
+- ⚖️ **Smart Comparisons** - Context-aware platform comparisons
+- 🛠️ **How-to Focus** - Specialized in task-oriented questions
+- 🚀 **Streamlit Frontend** - User-friendly interface with examples
+- 🔄 **Live Updates** - Rescrape docs to stay current with platform changes
 
-## Example Questions
+## Installation
 
-- "How do I set up a new source in Segment?"
-- "How can I create a user profile in mParticle?"
-- "How do I build an audience segment in Lytics?"
-- "How can I integrate my data with Zeotap?"
-- "How does Segment's audience creation process compare to Lytics'?"
-- "What's the difference between mParticle and Zeotap for identity resolution?"
+1. Clone repo:
+```bash
+git clone https://github.com/yourusername/cdp-chatbot.git
+cd cdp-chatbot
+Install dependencies:
 
-## Technology Stack
+bash
+Copy
+pip install -r requirements.txt
+Dependencies
+text
+Copy
+streamlit==1.28.0
+fastapi==0.104.0
+sentence-transformers==2.2.2
+faiss-cpu==1.7.4
+langchain==0.0.346
+beautifulsoup4==4.12.2
+uvicorn==0.23.2
+transformers==4.34.0
+Configuration
+Environment Setup:
 
-- React 18
-- TypeScript
-- Tailwind CSS
-- Vite
-- Lucide React (for icons)
+bash
+Copy
+mkdir -p data embeddings
+Scrape Documentation:
 
-## Getting Started
+bash
+Copy
+python scrapper.py
+Generate Embeddings:
 
-### Prerequisites
+bash
+Copy
+python retriever.py
+Usage
+Start Backend:
 
-- Node.js (v16 or higher)
-- npm or yarn
+bash
+Copy
+uvicorn main:app --reload --port 8000
+Launch Chat Interface:
 
-### Installation
+bash
+Copy
+streamlit run frontend.py
+Ask questions in the web interface:
 
-1. Clone the repository
-   ```bash
-   git clone https://github.com/yourusername/cdp-knowledge-assistant.git
-   cd cdp-knowledge-assistant
-   ```
+text
+Copy
+- "How to set up identity resolution in mParticle?"
+- "Compare user segmentation in Segment vs Lytics"
+- "Steps to create a data pipeline in Zeotap"
+Project Structure
+text
+Copy
+cdp-chatbot/
+├── data/               # Raw documentation texts
+├── embeddings/         # FAISS index + document mappings
+│
+├── frontend.py         # Streamlit UI
+├── main.py             # FastAPI backend + NLP logic
+├── retriever.py        # Embedding generation
+├── scrapper.py         # Documentation crawler
+└── utils.py            # Text processing utilities
+Key Components
+Enhanced Scraper:
 
-2. Install dependencies
-   ```bash
-   npm install
-   ```
+Crawls multiple documentation pages
 
-3. Start the development server
-   ```bash
-   npm run dev
-   ```
+Preserves content hierarchy (h1-h4 tags)
 
-4. Open your browser and navigate to `http://localhost:5173`
+Limits to 50 pages/CDP to prevent over-scraping
 
-## Project Structure
+Hybrid Search:
 
-```
-cdp-knowledge-assistant/
-├── public/
-│   └── vite.svg
-├── src/
-│   ├── services/
-│   │   └── cdpService.ts    # CDP data and question processing logic
-│   ├── App.tsx              # Main application component
-│   ├── index.css            # Global styles
-│   ├── main.tsx             # Application entry point
-│   └── vite-env.d.ts        # TypeScript declarations
-├── index.html
-├── package.json
-├── tsconfig.json
-└── vite.config.ts
-```
+Initial FAISS vector search (speed)
 
-## How It Works
+Cross-encoder reranking (accuracy)
 
-1. The application simulates a knowledge base containing documentation from four major CDPs
-2. When a user asks a question, the system:
-   - Analyzes the question to identify the relevant CDP and feature
-   - Extracts the appropriate information from the simulated documentation
-   - Formats and returns a helpful response
-3. The system can handle various types of questions including:
-   - Basic how-to questions
-   - Comparison questions between CDPs
-   - Advanced implementation questions
-   - Edge cases and irrelevant questions
+Chunk overlap for context preservation
 
-## Deployment
+Comparison Engine:
 
-The application is deployed on Netlify. To deploy your own version:
+Detects comparison intent
 
-1. Build the application
-   ```bash
-   npm run build
-   ```
+Platform-specific context injection
 
-2. Deploy the `dist` folder to your preferred hosting service
+Side-by-side feature display
 
-## Future Enhancements
+Limitations & Improvements
+Add rate limiting for documentation scraping
 
-- Integration with actual CDP documentation APIs
-- User authentication for personalized responses
-- History tracking of previous questions
-- Feedback mechanism to improve responses
-- Support for additional CDPs
+Implement conversation history
 
-## License
+Add citation links to source documentation
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+Support PDF documentation ingestion
 
-## Acknowledgments
+Add authentication for enterprise use
 
-- Documentation sources:
-  - [Segment Documentation](https://segment.com/docs/?ref=nav)
-  - [mParticle Documentation](https://docs.mparticle.com/)
-  - [Lytics Documentation](https://docs.lytics.com/)
-  - [Zeotap Documentation](https://docs.zeotap.com/home/en-us/)
+License
+This project is for educational/demonstration purposes. Commercial use requires permission from documentation owners (Segment, mParticle, etc.).
