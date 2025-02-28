@@ -3,7 +3,6 @@
 A documentation-powered chatbot that answers "how-to" questions about Customer Data Platforms (CDPs):  
 **Segment | mParticle | Lytics | Zeotap**. Uses semantic search and NLP to extract guidance from official documentation.
 
-![Chatbot Architecture](https://i.imgur.com/4F2D3Nj.png)
 
 ## Features
 
