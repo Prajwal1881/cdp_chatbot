@@ -66,12 +66,12 @@ Ask questions in the web interface:
 
 text
 Copy
-- "How to set up identity resolution in mParticle?"
-- "Compare user segmentation in Segment vs Lytics"
-- "Steps to create a data pipeline in Zeotap"
-Project Structure
-text
-Copy
+- How to set up identity resolution in mParticle?
+- Compare user segmentation in Segment vs Lytics
+- Steps to create a data pipeline in Zeotap
+
+## Project Structure
+
 cdp-chatbot/
 ├── data/               # Raw documentation texts
 ├── embeddings/         # FAISS index + document mappings
@@ -81,41 +81,20 @@ cdp-chatbot/
 ├── retriever.py        # Embedding generation
 ├── scrapper.py         # Documentation crawler
 └── utils.py            # Text processing utilities
+
 Key Components
-Enhanced Scraper:
 
-Crawls multiple documentation pages
+1. Enhanced Scraper:
+-  Crawls multiple documentation pages
+-  Preserves content hierarchy (h1-h4 tags)
+-  Limits to 50 pages/CDP to prevent over-scraping
 
-Preserves content hierarchy (h1-h4 tags)
+2. Hybrid Search:
+-  Initial FAISS vector search (speed)
+-  Cross-encoder reranking (accuracy)
+-  Chunk overlap for context preservation
 
-Limits to 50 pages/CDP to prevent over-scraping
-
-Hybrid Search:
-
-Initial FAISS vector search (speed)
-
-Cross-encoder reranking (accuracy)
-
-Chunk overlap for context preservation
-
-Comparison Engine:
-
-Detects comparison intent
-
-Platform-specific context injection
-
-Side-by-side feature display
-
-Limitations & Improvements
-Add rate limiting for documentation scraping
-
-Implement conversation history
-
-Add citation links to source documentation
-
-Support PDF documentation ingestion
-
-Add authentication for enterprise use
-
-License
-This project is for educational/demonstration purposes. Commercial use requires permission from documentation owners (Segment, mParticle, etc.).
+3. Comparison Engine:
+-  Detects comparison intent
+-  Platform-specific context injection
+-  Side-by-side feature display
